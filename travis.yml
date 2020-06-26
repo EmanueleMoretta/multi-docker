@@ -1,0 +1,15 @@
+sudo: required
+services:
+    - docker 
+
+before_install:
+    - docker build -t emanuelemoretta/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run emanuelemoretta/react-test npm test -- --coverage
+
+after_success:
+    - docker build -t emanuelemoretta/multi-client ./client
+    - docker build -t emanuelemoretta/multi-ngix ./ngix
+    - docker build -t emanuelemoretta/multi-server ./server
+    - docker build -t emanuelemoretta/multi-worker ./worker
