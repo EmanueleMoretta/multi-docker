@@ -13,3 +13,12 @@ after_success:
     - docker build -t emanuelemoretta/multi-ngix ./ngix
     - docker build -t emanuelemoretta/multi-server ./server
     - docker build -t emanuelemoretta/multi-worker ./worker
+
+# log in to the docker CLI check
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+#take those image and push them to docker hub
+- docker push emanuelemoretta/multi-client
+- docker push emanuelemoretta/multi-ngix
+- docker push emanuelemoretta/multi-server
+- docker push emanuelemoretta/multi-worker
